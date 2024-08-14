@@ -17,10 +17,5 @@ namespace CosmicCuration.Bullets
         
         public BulletController GetBullet() => GetItem();
         
-
-
-    
-
-       
     }
 }
