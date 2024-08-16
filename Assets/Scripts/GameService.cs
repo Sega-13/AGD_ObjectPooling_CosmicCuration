@@ -53,7 +53,7 @@ public class GameService : GenericMonoSingleton<GameService>
         playerService = new PlayerService(playerPrefab, playerScriptableObject, playerBulletPrefab, playerBulletScriptableObject);
         powerUpService = new PowerUpService(powerUpScriptableObject);
         enemyService = new EnemyService(enemyPrefab, enemyScriptableObject);
-        vfxService = new VFXService(vfxView, vfxScriptableObject);
+        vfxService = new VFXService(vfxView);
     }
 
     private void Update()

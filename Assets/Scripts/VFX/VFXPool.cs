@@ -8,7 +8,6 @@ namespace CosmicCuration.VFX
     public class VFXPool : GenericObjectPool<VFXController>
     {
         private VFXView vFXView;
-        private VFXData vFXData;
 
         public VFXPool(VFXView vFXView)
         {

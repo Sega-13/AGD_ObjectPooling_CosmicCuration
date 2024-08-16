@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CosmicCuration.VFX
@@ -6,24 +8,43 @@ namespace CosmicCuration.VFX
     {
         private VFXController controller;
         private ParticleSystem vfx;
-
+        [SerializeField] private List<VFXData> particleSystemMap;
         public void SetController(VFXController controllerToSet) => controller = controllerToSet;
 
-        public void ConfigureAndPlay(Vector2 positionToSet)
+        public void ConfigureAndPlay(VFXType type, Vector2 positionToSet)
         {
             gameObject.SetActive(true);
-            transform.position = positionToSet;
-            vfx = GetComponent<ParticleSystem>();
+            gameObject.transform.position = positionToSet;
+            foreach(VFXData item in particleSystemMap)
+            {
+                if(item.type == type)
+                {
+                    item.particleSystem.gameObject.SetActive(true);
+                    vfx = item.particleSystem;
+                }
+                else
+                {
+                    item.particleSystem.gameObject.SetActive(false);
+                }
+            }
         }
 
         private void Update()
         {
             if (vfx != null && vfx.isStopped)
             {
+               vfx.gameObject.SetActive(false);
+                vfx = null;
+                controller.OnParticleEffectCompleted();
                 gameObject.SetActive(false);
-                GameService.Instance.GetVFXService().ReturnVFXToPool(controller);
             }
                     
+        }
+        [Serializable]
+        public class VFXData
+        {
+            public VFXType type;
+            public ParticleSystem particleSystem;
         }
     }
 }
