@@ -11,6 +11,7 @@ namespace CosmicCuration.VFX
 
         public void ConfigureAndPlay(Vector2 positionToSet)
         {
+            gameObject.SetActive(true);
             transform.position = positionToSet;
             vfx = GetComponent<ParticleSystem>();
         }
@@ -18,7 +19,11 @@ namespace CosmicCuration.VFX
         private void Update()
         {
             if (vfx != null && vfx.isStopped)
-                    Destroy(gameObject);
+            {
+                gameObject.SetActive(false);
+                GameService.Instance.GetVFXService().ReturnVFXToPool(controller);
+            }
+                    
         }
     }
 }
